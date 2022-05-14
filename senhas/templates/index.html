@@ -9,18 +9,26 @@
         <h1> Painel de Senhas </h1>
         {% if senhas %}
             <ul>
-                <h3> Senhas que vão ser chamadas </h3>
+                <h3> Senhas que estão na fila </h3>
                 {% for senha in senhas %}
-                    {% if senha.painel_status_senha.nome == 'Na Fila' %}
+                    {% if senha.painel_tipo.nome == 'Preferencial' and senha.painel_status_senha.nome == 'Na Fila' %}   
                         <li>   
-                             Senha: {{senha.senha}} / Data e Hora: {{senha.hora_data}} / Categoria: {{senha.painel_categoria.nome}} / Tipo: {{senha.painel_tipo.nome}} / Status: {{senha.painel_status_senha.nome}}
+                            Senha: {{senha.senha}} / Data e Hora: {{senha.hora_data}} / Categoria: {{senha.painel_categoria.nome}} / Tipo: {{senha.painel_tipo.nome}} / Status: {{senha.painel_status_senha.nome}}
                         </li>
-                     {% endif %}
+                    {% endif %}
+                {% endfor %}
+
+                {% for senha in senhas %}
+                    {% if senha.painel_status_senha.nome == 'Na Fila' and senha.painel_tipo.nome != 'Preferencial' %}   
+                        <li>   
+                            Senha: {{senha.senha}} / Data e Hora: {{senha.hora_data}} / Categoria: {{senha.painel_categoria.nome}} / Tipo: {{senha.painel_tipo.nome}} / Status: {{senha.painel_status_senha.nome}}
+                        </li>
+                    {% endif %}
                 {% endfor %}
             </ul>
 
             <ul>
-                <h3> Senhas que não vão mais ser chamadas </h3>
+                <h3> Senhas que já foram chamadas </h3>
                 {% for senha in senhas %}
                     {% if senha.painel_status_senha.nome != 'Na Fila' %}   
                         <li>   
